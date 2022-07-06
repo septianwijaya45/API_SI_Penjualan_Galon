@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GalonController;
+use App\Http\Controllers\Api\LaporanKurirController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,7 @@ Route::post('update/{id}', [AuthController::class, 'update'])->name('update')->m
 
 // Get Galon
 Route::get('galon', [GalonController::class, 'index'])->name('galon')->middleware('auth:sanctum');
+
+// Laporan Kurir
+Route::get('laporan-kurir/{id}', [LaporanKurirController::class, 'index'])->name('galon')->middleware('auth:sanctum');
 
