@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     function login(Request $request)
     {
-        $response = (new UserServices($request->email, $request->password))->login($request->deviceName);
+        $response = (new UserServices($request->username, $request->password))->login($request->deviceName);
         return response()->json($response);
     }
 

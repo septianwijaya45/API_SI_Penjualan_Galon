@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserServices{
-    public $email, $password;
+    public $username, $password;
 
-    public function __construct($email, $password)
+    public function __construct($username, $password)
     {
-        $this->email    = $email;
-        $this->password = $password;
+        $this->username     = $username;
+        $this->password     = $password;
     }
 
     public function validateInputLogin()
     {
         $validator = Validator::make([
-            'email'     => $this->email,
+            'username'     => $this->username,
             'password'  => $this->password,
         ], [
-            'email'     => ['required'],
+            'username'     => ['required'],
             'password'  => ['required']
         ]);
 
@@ -43,16 +43,20 @@ class UserServices{
         if($validate['status'] == false){
             return $validate;
         }else{
-            $user = User::where('email', $this->email)->first();
+            $user = User::where('username', $this->username)->first();
             if(Hash::check($this->password, $user->password)){
                 if($user->role_id == 1){
                     return ['status' => false, 'messages' => ['Anda Bukan Pegawai!']];
                 }else{
                     $token = $user->createToken($deviceName)->plainTextToken;
-                    return ['status' => true, 'token' => $token, 'user' => $user];
+                    return [
+                        'status' => true, 
+                        'token' => $token, 
+                        'user' => $user
+                    ];
                 }
             }else{
-                return ['status' => false, 'messages' => ['Email atau Password Salah']];
+                return ['status' => false, 'messages' => ['Username atau Password Salah']];
             }
         }
     }
