@@ -24,6 +24,11 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
 
+// Update Profile
+Route::get('update/{id}', [AuthController::class, 'edit'])->name('edit')->middleware('auth:sanctum');
+Route::post('update/{id}', [AuthController::class, 'update'])->name('update')->middleware('auth:sanctum');
+
+
 // Get Galon
 Route::get('galon', [GalonController::class, 'index'])->name('galon')->middleware('auth:sanctum');
 

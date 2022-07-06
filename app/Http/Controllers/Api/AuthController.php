@@ -8,6 +8,7 @@ use App\Models\Pelanggan;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -69,6 +70,19 @@ class AuthController extends Controller
         return response()->json([
             'status'    => true,
             'data'      => $pelanggan
+        ]);
+    }
+
+    function edit($id){
+        $profile = DB::select("
+            SELECT u.username, p.*
+            FROM users u, pelanggans p
+            WHERE u.id = p.id_user AND u.id = $id
+        ");
+
+        return response()->json([
+            'status'    => true,
+            'data'      => $profile
         ]);
     }
 
